@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreeTools Hub - Free Online Tools</title>
+<meta name="description" content="Use free online calculators, word counter, BMI calculator and useful tools.">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#142b52;color:white;padding:24px 16px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{color:#d8e4ff}
+main{max-width:850px;margin:25px auto;padding:0 15px}
+.intro{text-align:center;margin-bottom:25px}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.card{background:white;padding:20px;border-radius:14px;box-shadow:0 3px 15px #0000000d}
+.card h2{font-size:19px;color:#174b91}
+input,textarea,button{width:100%;padding:12px;margin:7px 0;border:1px solid #ccd5e2;border-radius:8px;font-size:15px}
+button{background:#1764c0;color:white;border:0;font-weight:bold;cursor:pointer}
+button:hover{background:#104b91}
+.result{font-weight:bold;color:#087b47;min-height:22px}
+footer{text-align:center;padding:25px;color:#65738a}
+a{color:#1764c0}
+</style>
+</head>
+<body>
+<header>
+<h1>FreeTools Hub</h1>
+<p>Simple, useful and free online tools</p>
+</header>
+<main>
+<div class="intro">
+<h2>All Your Everyday Tools in One Place</h2>
+<p>Choose a tool below. No sign-up required.</p>
+</div>
+<div class="tools">
+<section class="card">
+<h2>Age Calculator</h2>
+<label>Date of birth</label>
+<input type="date" id="dob">
+<button onclick="age()">Calculate Age</button>
+<div class="result" id="ageResult"></div>
+</section>
+
+<section class="card">
+<h2>Percentage Calculator</h2>
+<label>Enter your marks</label>
+<input type="number" id="marks" placeholder="Obtained marks">
+<input type="number" id="total" placeholder="Total marks">
+<button onclick="percentage()">Calculate</button>
+<div class="result" id="percentResult"></div>
+</section>
+
+<section class="card">
+<h2>Word Counter</h2>
+<textarea id="words" rows="4" placeholder="Type or paste your text"></textarea>
+<button onclick="countWords()">Count Words</button>
+<div class="result" id="wordResult"></div>
+</section>
+
+<section class="card">
+<h2>BMI Calculator</h2>
+<input type="number" id="weight" placeholder="Weight in kg">
+<input type="number" id="height" placeholder="Height in cm">
+<button onclick="bmi()">Calculate BMI</button>
+<div class="result" id="bmiResult"></div>
+</section>
+
+<section class="card">
+<h2>Unit Converter</h2>
+<input type="number" id="km" placeholder="Distance in kilometres">
+<button onclick="convert()">Convert to miles</button>
+<div class="result" id="unitResult"></div>
+</section>
+
+<section class="card">
+<h2>EMI Calculator</h2>
+<input type="number" id="loan" placeholder="Loan amount (₹)">
+<input type="number" id="rate" placeholder="Annual interest rate (%)">
+<input type="number" id="months" placeholder="Duration (months)">
+<button onclick="emi()">Calculate EMI</button>
+<div class="result" id="emiResult"></div>
+</section>
+</div>
+</main>
+<footer>
+<p>FreeTools Hub © 2026</p>
+<p>Free tools for everyday use.</p>
+</footer>
+<script>
+function age(){
+let d=document.getElementById('dob').value;
+if(!d){ageResult.textContent='Please select your birth date.';return;}
+let birth=new Date(d),today=new Date();
+if(birth>today){ageResult.textContent='Please enter a valid date.';return;}
+let y=today.getFullYear()-birth.getFullYear();
+let m=today.getMonth()-birth.getMonth();
+let day=today.getDate()-birth.getDate();
+if(day<0)m--;
+if(m<0){y--;m+=12;}
+ageResult.textContent=`Your age: ${y} years and ${m} months`;
+}
+function percentage(){
+let a=Number(marks.value),b=Number(total.value);
+percentResult.textContent=b>0&&a>=0&&a<=b?(a/b*100).toFixed(2)+'%':'Enter valid marks and total.';
+}
+function countWords(){
+let t=words.value.trim();
+let n=t?t.split(/\s+/).length:0;
+wordResult.textContent=`Words: ${n} | Characters: ${words.value.length}`;
+}
+function bmi(){
+let w=Number(weight.value),h=Number(height.value)/100;
+if(w<=0||h<=0){bmiResult.textContent='Enter valid height and weight.';return;}
+bmiResult.textContent='BMI: '+(w/(h*h)).toFixed(1);
+}
+function convert(){
+let k=Number(document.getElementById('km').value);
+unitResult.textContent=k>=0?(k*0.621371).toFixed(2)+' miles':'Enter a valid distance.';
+}
+function emi(){
+let p=Number(loan.value),r=Number(rate.value)/1200,n=Number(months.value);
+if(p<=0||n<=0||r<0){emiResult.textContent='Enter valid loan details.';return;}
+let payment=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+emiResult.textContent='Monthly EMI: ₹'+payment.toFixed(2);
+}
+</script>
+</body>
+</html>
+  
